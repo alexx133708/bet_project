@@ -4,26 +4,53 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b8e1b6f4-094f-4bcf-8456-181b6b124219" name="Changes" comment="" />
+    <list default="true" id="b8e1b6f4-094f-4bcf-8456-181b6b124219" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/surnames.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fsurnames.txt" beforeDir="false" afterPath="$PROJECT_DIR$/fsurnames.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/msurnames.txt" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$USER_HOME$/AppData/Local/Programs/Python/Python310/Lib/logging/__init__.py" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/teams.txt" root0="SKIP_INSPECTION" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2Snjqoc9PNjeAuUbcWNM8DDieFe" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;last_opened_file_path&quot;: &quot;C:/PremierePro2020/AUTORUN.exe&quot;
+  }
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\alex\PycharmProjects\bet_project" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.main">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="bet_project" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -45,6 +72,32 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="bet_project" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.test" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -56,5 +109,52 @@
       <updated>1689789432383</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="PythonConfigurationType">
+        <watch expression="len(team_names)" />
+        <watch expression="team_names[teami][0]" />
+        <watch expression="randint(0, 6" />
+        <watch expression="randint(0, 6)" />
+        <watch expression="team_names[teami][0]" />
+        <watch expression="team_kost" />
+        <watch expression="team_names.pop(randint(0, len(team_names)))[0]" />
+        <watch expression="len(team_names)" />
+        <watch expression="len(team_names" />
+        <watch expression="len(team_names)" />
+        <watch expression="team_names.pop(randint(0, len(team_names)))" />
+        <watch expression="team_names.pop(randint(0, len(team_names)))[0]" />
+        <watch expression="team_names.pop(randint(0, len(team_names)))[0]" />
+        <watch expression="team_names.pop(randint(0, len(team_names)))" />
+        <watch expression="team_kost" />
+        <watch expression="team_names.pop(randint(0, len(team_names)))[0]" />
+        <watch expression="team_kost" />
+        <watch expression=" matches[bet[3]][6]" />
+        <watch expression="bet[5]" />
+        <watch expression="matches[bet[3]][6]" />
+        <watch expression="teams" />
+        <watch expression="teams" />
+        <watch expression="cur_team" />
+        <watch expression="cursor.execute(f'''SELECT name FROM teams WHERE event_id = {event[0]}''')" />
+        <watch expression="list(cursor.fetchall())" />
+        <watch expression="team_names" />
+        <watch expression="event[0]" />
+        <watch expression="cursor.fetchall()[0][0]" />
+        <watch expression="cursor.fetchall()[0]" />
+        <watch expression="cursor.fetchall()" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>
