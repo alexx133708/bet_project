@@ -20,9 +20,27 @@ res_path = 'E:\\bigdata\\bet_project\\'
 rep_path = 'E:\\bigdata\\bet_project\\reports\\'
 log_path = 'E:\\bigdata\\bet_project\\logs\\'
 orig_path = 'E:\\bigdata\\original\\'
-engine = create_engine(url=f"postgresql+psycopg2://postgres@192.168.1.75/bet_project", echo=False)
+while True:
+    srv = input('выберите сервер \n1. 192.168.1.75\n2. 188.120.250.101\n3. 91.144.153.132\n: ')
+    if srv == '1':
+        engine = create_engine(url=f"postgresql+psycopg2://postgres@192.168.1.75/bet_project", echo=False)
+        break
+    elif srv == '2':
+        engine = create_engine(url=f"postgresql+psycopg2://postgres@188.120.250.101/postgres", echo=False)
+        break
+    elif srv == '3':
+        engine = create_engine(url=f"postgresql+psycopg2://postgres@91.144.153.132/bet_project", echo=False)
+        break
+    print('циферку введи')
+while True:
+    try:
+        user_quan = int(input('введите количество пользователей: '))
+        break
+    except:
+        print('циферку введи')
 subj_cfg = 'C:\\Users\\alex\\PycharmProjects\\school\\subj_cfg.csv'
 connection = engine.raw_connection()
+print("канекшон саксессфул")
 ct = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
 logname = f"{ct}.log"
 logfile = open(log_path + logname, 'w+')
@@ -42,7 +60,7 @@ def global_drop():
     cursor.execute('''DROP TABLE IF EXISTS sprnames''')
     cursor.execute('''DROP TABLE IF EXISTS users CASCADE''')
     cursor.execute('''DROP TABLE IF EXISTS emails''')
-    cursor.execute('''DROP TABLE IF EXISTS bookmaker''')
+    cursor.execute('''DROP TABLE IF EXISTS bookmaker CASCADE''')
     cursor.execute('''DROP TABLE IF EXISTS events CASCADE''')
     cursor.execute('''DROP TABLE IF EXISTS sprteams''')
     cursor.execute('''DROP TABLE IF EXISTS team_score''')
@@ -81,8 +99,41 @@ def generate_spr():
             cursor.execute(f'''INSERT INTO sprteams(name)
                                    VALUES('{row.replace(help, "")}')''')
     connection.commit()
-    logging.info('generate references end')
+    cursor.execute('''
+CREATE OR REPLACE FUNCTION public.add_users(n integer)
+ RETURNS integer
+ LANGUAGE plpgsql
+AS $function$
+declare counter int = 0;
+begin
+	while counter <= n
+	loop
+		insert into users(name, surname, sex, bookmaker_id, age)
+		values((select name from sprnames where sex = 'М' order by random() limit 1),
+	           (select surname from sprnames where sex = 'М' order by random() limit 1),
+	           'М',
+	           floor(random()*n*10),
+	           floor(random()*62+18));
+		counter = counter + 1;
+	end loop;
+	counter = 0;
+	while counter <= n
+	loop
+		insert into users(name, surname, sex, bookmaker_id, age)
+		values((select name from sprnames where sex = 'Ж' order by random() limit 1),
+	           (select surname from sprnames where sex = 'Ж' order by random() limit 1),
+	           'Ж',
+	           floor(random()*n*10),
+	           floor(random()*62+18));
+		counter = counter + 1;
+	end loop;
+	return 0;
+end
 
+$function$
+;''')
+    connection.commit()
+    logging.info('generate references end')
 def generate_tables():
     logging.info('generate bookmaker start')
     cursor = connection.cursor()
@@ -101,7 +152,7 @@ def generate_tables():
         i = 0
         for row in f.readlines():
             i += 1
-            if i > 100000:
+            if i > user_quan*10:
                 break
             row = row.split(';')
             help = '\n'
@@ -109,6 +160,8 @@ def generate_tables():
                               INSERT INTO bookmaker ("district", "region", "city", "address", "size")
                               VALUES('{row[1]}', '{row[2]}', '{row[3]}', '{row[4].replace("'", "")}', '{row[5].replace(help, "")}')
                               ''')
+            print('-')
+    # cursor.execute('create table bookmaker as table stores;')
     connection.commit()
     logging.info('generate bookmaker end')
     logging.info('generate users emails start')
@@ -131,23 +184,7 @@ def generate_tables():
                               email text
                               );''')
     connection.commit()
-    cursor.execute('''
-                      SELECT *
-                      FROM sprnames
-                      ''')
-    names = cursor.fetchall()
-    book_id_list = []
-    count = 0
-    for _ in range(5):
-        for user in names:
-            while True:
-                book_id = random.randint(1, 90000)
-                if book_id not in book_id_list:
-                    book_id_list.append(book_id)
-                    break
-            count += 1
-            cursor.execute(f'''INSERT INTO users(name, surname, sex, bookmaker_id, age)
-                               VALUES('{user[0]}', '{user[1]}', '{user[2]}', {book_id}, {randint(18, 80)})''')
+    cursor.execute(f'select add_users({user_quan})')
     connection.commit()
     cursor.execute('''
                           SELECT name, surname, id 
@@ -224,7 +261,7 @@ def generate_tables():
     for event in events:
         cursor.execute(f'''SELECT name FROM teams WHERE event_id = {event[0]}''')
         team_names = cursor.fetchall()
-        for teami in range(0, 31):
+        for teami in range(0, 32):
             teams = team_names
             cur_team = teams[teami]
             for team in teams:
@@ -242,7 +279,7 @@ def generate_tables():
 #
                 cursor.execute(f'''INSERT INTO matches(event_id, year, month, day, t1_name, t1_res, t1_pts, t2_name, t2_res, t2_pts) 
                                    VALUES({event[0]}, {randint(2018, 2022)}, {randint(1, 12)}, {randint(1, 28)}, '{cur_team[0]}', {t1_res}, {t1_pts}, '{team[0]}', {t2_res}, {t2_pts})''')
-        connection.commit()
+    connection.commit()
     logging.info('generate matches end')
     logging.info('generate bets start')
     cursor.execute('''CREATE TABLE bets
@@ -287,8 +324,11 @@ def generate_tables():
                 winsum += bet[2]
         except:
             pass
-        allsum += bet[2]
-    allsumclear = allsum - allsum / 20
+        # allsum += bet[2]
+    cursor.execute('SELECT SUM(bet_size) FROM bets')
+    allsum = cursor.fetchall()[0][0]
+    cursor.execute('SELECT SUM(bet_size) - SUM(bet_size) / 20 FROM bets')
+    allsumclear = cursor.fetchall()[0][0]
     for bet in bets:
         try:
             if bet[5]:
@@ -299,7 +339,8 @@ def generate_tables():
             print(len(matches))
         try:
             if bet[5] == True and matches[bet[3]][7] == 2 or bet[5] == False and matches[bet[3]][10] == 2:
-                win = percentage(bet[2], allsum) * allsumclear
+                # win = percentage(bet[2], allsum) * allsumclear
+                cursor.execute('SELECT (100 * bet_size / SUM(bet_size)) * (SUM(bet_size) - SUM(bet_size) / 20) FROM bets')
                 cursor.execute(f'''INSERT INTO wins(client_id, bet_id, win, book_win, team)
                                    VALUES({bet[1]}, {bet[0]}, {win}, {bet[2]/20}, '{bet_team}')''')
             else:
